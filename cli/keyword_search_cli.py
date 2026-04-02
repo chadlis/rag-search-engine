@@ -5,14 +5,14 @@ from typing import Iterator
 
 from dotenv import load_dotenv
 
-from .loader import load_movies, load_stopwords
-from .search import search_query
-from .indexes import InvertedIndex
+from loader import load_movies, load_stopwords
+from search import search_query
+from indexes import InvertedIndex
 
 load_dotenv()
 
 DATA_DIR = Path(os.environ.get("DATA_DIR", "data"))
-CACHE_DIR = Path(os.environ.get("DATA_DIR", "cache"))
+CACHE_DIR = Path(os.environ.get("CACHE_DIR", "cache"))
 MOVIES_FILENAME = "movies.json"
 STOPWORDS_FILENAME = "stopwords.txt"
 
@@ -21,11 +21,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Keyword Search CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     search_parser = subparsers.add_parser("search", help="Search movies")
-    build_parser = subparsers.add_parser("build", help="Build movies")
     search_parser.add_argument("query", type=str, help="Search query")
     search_parser.add_argument(
         "--limit", type=int, default=5, help="Max results to display"
     )
+    subparsers.add_parser("build", help="Build movies")
     
     data = load_movies(DATA_DIR / MOVIES_FILENAME)
     
@@ -35,6 +35,8 @@ def main() -> None:
             inverted_index = InvertedIndex()
             inverted_index.build(data)
             inverted_index.save(CACHE_DIR)
+            docs = inverted_index.get_documents("merida")
+            print(f"First document for token 'merida' = {docs[0]}")
         case "search":
             print(f"Searching for: {args.query}")
             stopwords = load_stopwords(DATA_DIR / STOPWORDS_FILENAME)

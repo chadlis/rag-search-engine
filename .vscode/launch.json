@@ -5,9 +5,9 @@
             "name": "Search: query movies",
             "type": "debugpy",
             "request": "launch",
-            "module": "cli.keyword_search_cli",
+            "program": "${workspaceFolder}/cli/keyword_search_cli.py",
             "args": ["search", "action", "--limit", "5"],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/cli",
             "env": {
                 "DATA_DIR": "${workspaceFolder}/data",
                 "CACHE_DIR": "${workspaceFolder}/cache"
@@ -17,9 +17,9 @@
             "name": "Build: inverted index",
             "type": "debugpy",
             "request": "launch",
-            "module": "cli.keyword_search_cli",
+            "program": "${workspaceFolder}/cli/keyword_search_cli.py",
             "args": ["build"],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/cli",
             "env": {
                 "DATA_DIR": "${workspaceFolder}/data",
                 "CACHE_DIR": "${workspaceFolder}/cache"

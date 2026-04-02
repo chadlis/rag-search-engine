@@ -1,7 +1,7 @@
 from pathlib import Path
 import pickle
 
-from .search import tokenize
+from search import tokenize
 
 INDEX_FILENAME = "index.pkl"
 DOCMAP_FILENAME = "docmap.pkl"
