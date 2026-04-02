@@ -9,10 +9,10 @@ STEMMER = PorterStemmer()
 def tokenize(text: str) -> list[str]:
     return text.lower().translate(PUNCTUATION_TABLE).split()
 
-def stem_and_filter(text: str, stopwords: set[str]) -> list[str]:
-    return [STEMMER.stem(t) for t in tokenize(text) if t not in stopwords]
+def stem_and_filter(text: str, stopwords: set[str], stemmer=STEMMER) -> list[str]:
+    return [stemmer.stem(t) for t in tokenize(text) if t not in stopwords]
 
-def matches_query(query_stems: list[str], text: str, stopwords: list[str]) -> bool:
+def matches_query(query_stems: list[str], text: str, stopwords: set[str]) -> bool:
     text_stems = stem_and_filter(text, stopwords)
     return any(q == t for q in query_stems for t in text_stems)
 
